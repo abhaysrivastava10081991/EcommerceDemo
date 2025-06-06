@@ -2,6 +2,8 @@
 using Ecommerce.DataAccess.Repository.IRepository;
 using Ecommerce.DataModels.Models;
 using Ecommerce.DataModels.ModelView;
+using Ecommerce.DataUtility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
@@ -9,6 +11,7 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 namespace EcommerceDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private IUnitOfWork _unitOfWork;

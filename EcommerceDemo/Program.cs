@@ -14,6 +14,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnection")));
 
 builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LoginPath = $"/Identity/Account/Logout";
+    options.LoginPath = $"/Identity/Account/AccessDenied";
+});
+
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
