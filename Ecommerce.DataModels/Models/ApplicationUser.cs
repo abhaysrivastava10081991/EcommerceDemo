@@ -11,7 +11,7 @@ namespace Ecommerce.DataModels.Models
     public class ApplicationUser :IdentityUser
     {
         [Required]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public string? StreatAddress { get; set; }
         public string? City { get; set; }
