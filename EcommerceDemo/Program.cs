@@ -22,6 +22,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();

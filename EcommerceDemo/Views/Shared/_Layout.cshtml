@@ -70,3 +70,23 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    loadCartCount();
+    async function loadCartCount() {
+           try {
+               var response = await fetch(`/Customer/Cart/GetTotalItemInCart`);
+               if (response.ok) {
+                   var result = await response.json();
+                   var cartItemCount = document.getElementById("cartCount");
+                   if (cartItemCount) {
+                       cartItemCount.innerHTML = result;
+                   }
+               } else {
+                   console.log("Failed to add item to cart.");
+               }
+           } catch (err) {
+               console.log(err);
+           }
+       }
+</script>

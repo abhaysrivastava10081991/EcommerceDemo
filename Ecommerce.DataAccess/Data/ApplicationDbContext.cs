@@ -14,6 +14,12 @@ namespace EcommerceDemo.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductDetails> ProductDetails { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<OrderStatus> OrderStatus { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public DbSet<CartDetails> CartDetails { get; set; }
         public DbSet<ApplicationUser> ApplicationUserss { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

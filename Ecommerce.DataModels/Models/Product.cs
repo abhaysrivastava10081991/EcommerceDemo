@@ -27,12 +27,19 @@ namespace Ecommerce.DataModels.Models
 
         [ValidateNever]
         public string ImageUrl { get; set; }
-
         public int CategoryId { get; set; }
-
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }
+
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
+        [ValidateNever]
+        public ProductDetails? ProductDetails { get; set; }
+        [ValidateNever]
+        public OrderDetails? OrderDetails { get; set; }
+        [ValidateNever]
+        public CartDetails? CartDetails { get; set; }
 
     }
 }

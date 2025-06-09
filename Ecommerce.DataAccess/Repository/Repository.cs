@@ -20,7 +20,8 @@ namespace Ecommerce.DataAccess.Repository
         {
             _dbContext = dbContext;
             this.dbSet = _dbContext.Set<T>();
-            _dbContext.Products.Include(u => u.Category).Include(u => u.CategoryId);
+            _dbContext.Products.Include(u => u.Category).Include(u => u.CategoryId)
+                .Include(x=>x.ProductDetails).Include(x => x.ID);
         }
         public void Add(T entity)
         {

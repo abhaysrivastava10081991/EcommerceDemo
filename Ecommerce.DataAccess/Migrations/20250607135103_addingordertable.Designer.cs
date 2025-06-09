@@ -4,6 +4,7 @@ using EcommerceDemo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250607135103_addingordertable")]
+    partial class addingordertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,9 +150,6 @@ namespace Ecommerce.DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
                     b.Property<string>("StatusName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -189,9 +189,6 @@ namespace Ecommerce.DataAccess.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryId");
@@ -207,8 +204,7 @@ namespace Ecommerce.DataAccess.Migrations
                             Discount = 0.0,
                             ImageUrl = "",
                             Name = "English Willow",
-                            Price = 1000.0,
-                            ProductId = 0
+                            Price = 1000.0
                         },
                         new
                         {
@@ -218,8 +214,7 @@ namespace Ecommerce.DataAccess.Migrations
                             Discount = 0.0,
                             ImageUrl = "",
                             Name = "Kasmiri Willow",
-                            Price = 1000.0,
-                            ProductId = 0
+                            Price = 1000.0
                         },
                         new
                         {
@@ -229,72 +224,8 @@ namespace Ecommerce.DataAccess.Migrations
                             Discount = 0.0,
                             ImageUrl = "",
                             Name = "Meroth Willow",
-                            Price = 1000.0,
-                            ProductId = 0
+                            Price = 1000.0
                         });
-                });
-
-            modelBuilder.Entity("Ecommerce.DataModels.Models.ProductDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Archived")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("BatShape1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BatShape2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BatShape3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GripColour1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GripColour2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GripColour3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Height1")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Height2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Height3")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("Width1")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Width2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Width3")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductDetails");
                 });
 
             modelBuilder.Entity("Ecommerce.DataModels.Models.ShoppingCart", b =>
@@ -652,15 +583,6 @@ namespace Ecommerce.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Ecommerce.DataModels.Models.ProductDetails", b =>
-                {
-                    b.HasOne("Ecommerce.DataModels.Models.Product", null)
-                        .WithMany("ProductDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -722,8 +644,6 @@ namespace Ecommerce.DataAccess.Migrations
                     b.Navigation("CartDetails");
 
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductDetails");
                 });
 #pragma warning restore 612, 618
         }

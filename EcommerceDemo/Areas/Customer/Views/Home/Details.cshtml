@@ -5,8 +5,7 @@
         <div class="card-header bg-primary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.Name</h3>
-                    <p class="text-white-50 fw-semibold mb-0">@Model.Description</p>
+                    <h5 class="text-white text-uppercase">@Model.Name</h5>
                 </div>
             </div>
         </div>
@@ -39,34 +38,49 @@
                                 </span>
                             </h6>
                         </div>
-                     @*    <div class="row text-center ps-2">
+                        <div class="row text-center ps-2">
+                           Customization
+                        </div>
+                        <div class="row text-center ps-2">
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">Quantity</div>
+                                <div class="text-dark text-opacity-50 fw-semibold">Width:</div>
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">1-50</div>
+                                <input type="radio" id="width1" name="SelectedWidth" value="@Model.ProductDetails.Width1" />
+                                <label for="Width1">@Model.ProductDetails.Width1</label>
+                               @*  <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width1</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">51-100</div>
+                                <input type="radio" id="width2" name="SelectedWidth" value="@Model.ProductDetails.Width2" />
+                                <label for="Width2">@Model.ProductDetails.Width2</label>
+                          @*       <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width2</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">100+</div>
+                                <input type="radio" id="width3" name="SelectedWidth" value="@Model.ProductDetails.Width3" />
+                                <label for="Width3">@Model.ProductDetails.Width3</label>
+                                @* <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width3</div> *@
                             </div>
                         </div>
                         <div class="row text-center ps-2">
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Price</div>
+                                <div>Color:</div>
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Price</div>
+                                <input type="radio" id="GripColour1" name="SelectedColor" value="@Model.ProductDetails.GripColour1" />
+                                <label for="GripColour1">@Model.ProductDetails.GripColour1</label>
+                                @* <div>@Model.ProductDetails.GripColour1</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Price50</div>
+                                <input type="radio" id="GripColour2" name="SelectedColor" value="@Model.ProductDetails.GripColour2" />
+                                <label for="GripColour2">@Model.ProductDetails.GripColour2</label>
+                              @*   <div>@Model.ProductDetails.GripColour2</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Price100</div>
+                                <input type="radio" id="GripColour3" name="SelectedColor" value="@Model.ProductDetails.GripColour3" />
+                                <label for="GripColour3">@Model.ProductDetails.GripColour3</label>
+                              @*   <div>@Model.ProductDetails.GripColour3</div> *@
                             </div>
-                        </div> *@
+                        </div>
                         <div class="row pl-2 my-3">
                             <p class="text-secondary lh-sm">Description</p>
                         </div>
@@ -85,9 +99,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" disabled
-                                        class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Add to Cart (Comming Soon...)
+                                <button type="submit" onclick="add(@Model.ID)" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
+                                    Add to Cart
                                 </button>
                             </div>
                         </div>
@@ -98,3 +111,24 @@
         </div>
     </div>
 </form>
+
+@section Scripts{
+    <script>
+                async function add(productId) {
+            try {
+                var response = await fetch(`/Customer/Cart/AddItem?productId=${productId}`);
+                if (response.ok) {
+                    var result = await response.json();
+                    var cartItemCount = document.getElementById("cartCount");
+                    if (cartItemCount) {
+                        cartItemCount.innerHTML = result;
+                    }
+                } else {
+                    console.log("Failed to add item to cart.");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+}

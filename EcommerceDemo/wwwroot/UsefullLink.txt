@@ -1,0 +1,9 @@
+﻿https://bootswatch.com/ For Theme
+https://getbootstrap.com/
+
+----Commands to run in Package Manager Console:----
+
+add-migration addingproductdetailtable
+update-database
+To undo this action, use 
+Remove-Migration
