@@ -1,5 +1,5 @@
 ﻿@using Ecommerce.DataModels.Models
-@model Product 
+@model Product
 <form method="post">
     <div class="card shadow border-0 mt-4">
         <div class="card-header bg-primary bg-gradient text-light py-4">
@@ -39,7 +39,7 @@
                             </h6>
                         </div>
                         <div class="row text-center ps-2">
-                           Customization
+                            Customization
                         </div>
                         <div class="row text-center ps-2">
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
@@ -48,12 +48,12 @@
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
                                 <input type="radio" id="width1" name="SelectedWidth" value="@Model.ProductDetails.Width1" />
                                 <label for="Width1">@Model.ProductDetails.Width1</label>
-                               @*  <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width1</div> *@
+                                @*  <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width1</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
                                 <input type="radio" id="width2" name="SelectedWidth" value="@Model.ProductDetails.Width2" />
                                 <label for="Width2">@Model.ProductDetails.Width2</label>
-                          @*       <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width2</div> *@
+                                @*       <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width2</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
                                 <input type="radio" id="width3" name="SelectedWidth" value="@Model.ProductDetails.Width3" />
@@ -73,12 +73,12 @@
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
                                 <input type="radio" id="GripColour2" name="SelectedColor" value="@Model.ProductDetails.GripColour2" />
                                 <label for="GripColour2">@Model.ProductDetails.GripColour2</label>
-                              @*   <div>@Model.ProductDetails.GripColour2</div> *@
+                                @*   <div>@Model.ProductDetails.GripColour2</div> *@
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
                                 <input type="radio" id="GripColour3" name="SelectedColor" value="@Model.ProductDetails.GripColour3" />
                                 <label for="GripColour3">@Model.ProductDetails.GripColour3</label>
-                              @*   <div>@Model.ProductDetails.GripColour3</div> *@
+                                @*   <div>@Model.ProductDetails.GripColour3</div> *@
                             </div>
                         </div>
                         <div class="row pl-2 my-3">
@@ -112,9 +112,14 @@
     </div>
 </form>
 
-@section Scripts{
+@section Scripts {
     <script>
-                async function add(productId) {
+        async function add(productId) {
+
+            var userNameEl = document.getElementById("userName");
+            if (userNameEl == null) {
+                window.location.href = '/Identity/Account/Login';
+            }
             try {
                 var response = await fetch(`/Customer/Cart/AddItem?productId=${productId}`);
                 if (response.ok) {
@@ -122,6 +127,7 @@
                     var cartItemCount = document.getElementById("cartCount");
                     if (cartItemCount) {
                         cartItemCount.innerHTML = result;
+                        window.location.href = "#cartCount";
                     }
                 } else {
                     console.log("Failed to add item to cart.");

@@ -31,7 +31,9 @@
                             </div>
                         </div>
                         <div>
-                            <a asp-action="Details" asp-route-productId="@product.ID"
+                            @* <a onclick="add(@product.ID)" asp-action="Details" asp-route-productId="@product.ID"
+                               class=" btn btn-primary bg-gradient border-0 form-control">Details</a> *@
+                            <a onclick="add(@product.ID)" 
                                class=" btn btn-primary bg-gradient border-0 form-control">Details</a>
                         </div>
                     </div>
@@ -42,3 +44,19 @@
     }
 
 </div>
+
+@section Scripts {
+    <script>
+        async function add(productId) {
+
+            var userNameEl = document.getElementById("userName");
+            if (userNameEl == null) {
+                window.location.href = '/Identity/Account/Login';
+            }
+            else{
+                 window.location.href = 'Customer/Home/Details?productId=' + productId;
+            }
+           
+        }
+    </script>
+}
