@@ -27,9 +27,9 @@ namespace EcommerceDemo.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { ID = 1, Name = "Sports", DisplayOrder = 1 },
-                new Category { ID = 2, Name = "Fruits", DisplayOrder = 2 },
-                new Category { ID = 3, Name = "Vehicle", DisplayOrder = 3 }
+                new Category { ID = 1, Name = "BAT", DisplayOrder = 1 },
+                new Category { ID = 2, Name = "PAD", DisplayOrder = 2 },
+                new Category { ID = 3, Name = "Glups", DisplayOrder = 3 }
                 );
 
             modelBuilder.Entity<Product>().HasData(

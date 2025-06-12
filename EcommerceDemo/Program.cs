@@ -23,9 +23,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
-
+builder.Services.AddScoped<IUserOrderRepository, UserOrderRepository>();
 
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 var app = builder.Build();
 

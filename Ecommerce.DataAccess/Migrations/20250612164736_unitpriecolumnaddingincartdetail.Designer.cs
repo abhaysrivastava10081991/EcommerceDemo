@@ -4,6 +4,7 @@ using EcommerceDemo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612164736_unitpriecolumnaddingincartdetail")]
+    partial class unitpriecolumnaddingincartdetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +57,8 @@ namespace Ecommerce.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("ShoppingCartId");
 
@@ -129,6 +133,9 @@ namespace Ecommerce.DataAccess.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("OrderDetails");
                 });
@@ -622,8 +629,8 @@ namespace Ecommerce.DataAccess.Migrations
             modelBuilder.Entity("Ecommerce.DataModels.Models.CartDetails", b =>
                 {
                     b.HasOne("Ecommerce.DataModels.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .WithOne("CartDetails")
+                        .HasForeignKey("Ecommerce.DataModels.Models.CartDetails", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -654,6 +661,12 @@ namespace Ecommerce.DataAccess.Migrations
                     b.HasOne("Ecommerce.DataModels.Models.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecommerce.DataModels.Models.Product", null)
+                        .WithOne("OrderDetails")
+                        .HasForeignKey("Ecommerce.DataModels.Models.OrderDetails", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -763,6 +776,10 @@ namespace Ecommerce.DataAccess.Migrations
 
             modelBuilder.Entity("Ecommerce.DataModels.Models.Product", b =>
                 {
+                    b.Navigation("CartDetails");
+
+                    b.Navigation("OrderDetails");
+
                     b.Navigation("ProductDetails");
                 });
 

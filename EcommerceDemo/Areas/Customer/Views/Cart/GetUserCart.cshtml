@@ -1,0 +1,62 @@
+﻿@using Ecommerce.DataModels.Models
+@model ShoppingCart
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient mt-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">User Cart List</h2>
+            </div>
+        </div>
+    </div>
+    @if (Model!=null && Model.CartDetails.Count > 0)
+    {
+        <div class="card-body p-4 mb-4">
+            <table id="productDetails" class="table table-bordered table-striped " style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartDetails)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Description</td>
+                            <td>@item.Product.Price X @item.Quantity </td>
+                            <td>
+                                    <img src="@item.Product.ImageUrl" alt="No Image available" width="100" height="100" />
+
+                            </td>
+                            <td>@(item.Product.Price*item.Quantity)</td>
+                            <td>
+                                <div class="w-75 btn-group" role="group">
+                                    <a href="/Customer/Cart/AddItem?productId=@item.ProductId&redirect=1" class="btn btn-primary">+</a>
+                                    <a class="btn btn-danger" href="/Customer/Cart/RemoveItem?productId=@item.ProductId">-</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="my-2">
+            <h5>Total Price (INR)</h5>
+            @(Model.CartDetails.Select(item=>item.Product.Price*item.Quantity).Sum())
+        </div>
+        <div class="my-2">
+            <a class="btn btn-primary" href="/Customer/Cart/CheckOut">Checkout</a>
+        </div>
+    }
+    else
+    {
+       <div>
+           <h5>Cart is Empty</h5>
+       </div>
+    }
+</div>

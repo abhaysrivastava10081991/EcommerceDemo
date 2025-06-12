@@ -20,7 +20,7 @@ namespace Ecommerce.DataAccess.Repository
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
         }
-        public async Task<int> AddItem(int productId, int qty)
+        public async Task<int> AddItem(int productId,int unitPrice, int qty)
         {
             string userId = getUserId();
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
@@ -61,6 +61,7 @@ namespace Ecommerce.DataAccess.Repository
                         ShoppingCartId = cart.ID,
                         ProductId = productId,
                         Quantity = qty,
+                        UnitPrice= unitPrice,
                         CreateBy = userId
                     };
                     _dbContext.CartDetails.Add(cartItem);
@@ -160,5 +161,64 @@ namespace Ecommerce.DataAccess.Repository
             return UserId ?? string.Empty;
         }
 
+        public async Task<bool> DoCheckOut()
+        {
+            using var transaction = _dbContext.Database.BeginTransaction();
+            try
+            {
+                string userId = getUserId();
+                if(string.IsNullOrEmpty(userId))
+                {
+                    throw new Exception("not loged in");
+                }
+                var cart = await getCart(userId);
+                if(cart is null)
+                {
+                    throw new Exception("Invalid Cart");
+                }
+                var cartDetails = await _dbContext.CartDetails.Where(a => a.ShoppingCartId == cart.ID).ToListAsync(); 
+                if (cartDetails.Count==0 )
+                {
+                    throw new Exception("Cart is empty");
+                }
+                var order = new Order
+                {
+                    UserId = userId,
+                    OrderDate = DateTime.Now,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = userId,
+                    OrderStatusId = 2,
+                };
+                _dbContext.Orders.Add(order);
+                _dbContext.SaveChanges();
+
+                foreach(var item in cartDetails)
+                {
+                    var orderDet = new OrderDetails
+                    {
+                        ProductId = Convert.ToInt32(item.ProductId),
+                        OrderId = order.ID,
+                        Quantity = Convert.ToInt32(item.Quantity),
+                        UnitPrice = item.UnitPrice,
+                        CreatedBy = userId,
+                    };
+                    _dbContext.OrderDetails.Add(orderDet);
+                    _dbContext.SaveChanges();
+                }
+
+                // Removing the Cart Details
+
+                _dbContext.CartDetails.RemoveRange(cartDetails);
+                _dbContext.SaveChanges();
+                transaction.Commit();
+                return true;
+
+            }
+            catch(Exception ex)
+            {
+                return false;
+                throw;
+            }
+        }
     }
 }

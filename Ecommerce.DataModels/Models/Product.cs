@@ -33,13 +33,11 @@ namespace Ecommerce.DataModels.Models
         public Category Category { get; set; }
 
         public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
         [ValidateNever]
         public ProductDetails? ProductDetails { get; set; }
-        [ValidateNever]
-        public OrderDetails? OrderDetails { get; set; }
-        [ValidateNever]
-        public CartDetails? CartDetails { get; set; }
-
+       // [ValidateNever]
+        //public OrderDetails? OrderDetails { get; set; }
+        //[ValidateNever]
+        //public CartDetails? CartDetails { get; set; }
     }
 }

@@ -18,9 +18,9 @@ namespace EcommerceDemo.Areas.Customer.Controllers
             _dbContext = dbContext;
             _cartRepository = cartRepository;
         }
-        public async Task<IActionResult> AddItem(int productId,int qty=1,int redirect=0)
+        public async Task<IActionResult> AddItem(int productId,int unitPrice,int qty=1,int redirect=0)
         {
-            var cartCount = await _cartRepository.AddItem(productId, qty);
+            var cartCount = await _cartRepository.AddItem(productId, unitPrice, qty);
   
             if (redirect == 0)
             {
@@ -45,6 +45,14 @@ namespace EcommerceDemo.Areas.Customer.Controllers
         {
             int cartItem = await _cartRepository.getCartItemCount();
             return Json(cartItem);
+        }
+
+        public async Task<IActionResult> CheckOut()
+        {
+            bool isCheckout = await _cartRepository.DoCheckOut();
+            if (!isCheckout)
+                throw new Exception("something went wrong");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

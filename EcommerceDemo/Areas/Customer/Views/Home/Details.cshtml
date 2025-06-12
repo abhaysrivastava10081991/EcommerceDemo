@@ -99,7 +99,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" onclick="add(@Model.ID)" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
+                                <button type="submit" onclick="add(@Model.ID,@Model.Price)" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
                                     Add to Cart
                                 </button>
                             </div>
@@ -114,14 +114,14 @@
 
 @section Scripts {
     <script>
-        async function add(productId) {
+        async function add(productId,unitPrice) {
 
             var userNameEl = document.getElementById("userName");
             if (userNameEl == null) {
                 window.location.href = '/Identity/Account/Login';
             }
             try {
-                var response = await fetch(`/Customer/Cart/AddItem?productId=${productId}`);
+                var response = await fetch(`/Customer/Cart/AddItem?productId=${productId}&unitPrice${unitPrice}`);
                 if (response.ok) {
                     var result = await response.json();
                     var cartItemCount = document.getElementById("cartCount");

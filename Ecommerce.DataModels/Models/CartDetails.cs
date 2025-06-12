@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Ecommerce.DataModels.Models
@@ -15,6 +16,7 @@ namespace Ecommerce.DataModels.Models
         public int? ProductId { get; set; }
         [Required]
         public int? Quantity { get; set; }
+        public double? UnitPrice { get; set; }
         public Product Product { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
         public bool Archived { get; set; } = false;

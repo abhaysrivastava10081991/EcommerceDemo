@@ -4,6 +4,7 @@ using EcommerceDemo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250611183554_updateordertabledatiltable")]
+    partial class updateordertabledatiltable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,12 +52,10 @@ namespace Ecommerce.DataAccess.Migrations
                     b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
 
-                    b.Property<double?>("UnitPrice")
-                        .HasColumnType("float");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("ShoppingCartId");
 
@@ -130,6 +131,9 @@ namespace Ecommerce.DataAccess.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
                     b.ToTable("OrderDetails");
                 });
 
@@ -199,16 +203,11 @@ namespace Ecommerce.DataAccess.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShoppingCartID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("OrderID");
-
-                    b.HasIndex("ShoppingCartID");
 
                     b.ToTable("Products");
 
@@ -622,8 +621,8 @@ namespace Ecommerce.DataAccess.Migrations
             modelBuilder.Entity("Ecommerce.DataModels.Models.CartDetails", b =>
                 {
                     b.HasOne("Ecommerce.DataModels.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .WithOne("CartDetails")
+                        .HasForeignKey("Ecommerce.DataModels.Models.CartDetails", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -657,6 +656,12 @@ namespace Ecommerce.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ecommerce.DataModels.Models.Product", null)
+                        .WithOne("OrderDetails")
+                        .HasForeignKey("Ecommerce.DataModels.Models.OrderDetails", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
                 });
 
@@ -671,10 +676,6 @@ namespace Ecommerce.DataAccess.Migrations
                     b.HasOne("Ecommerce.DataModels.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderID");
-
-                    b.HasOne("Ecommerce.DataModels.Models.ShoppingCart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ShoppingCartID");
 
                     b.Navigation("Category");
                 });
@@ -763,14 +764,16 @@ namespace Ecommerce.DataAccess.Migrations
 
             modelBuilder.Entity("Ecommerce.DataModels.Models.Product", b =>
                 {
+                    b.Navigation("CartDetails");
+
+                    b.Navigation("OrderDetails");
+
                     b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("Ecommerce.DataModels.Models.ShoppingCart", b =>
                 {
                     b.Navigation("CartDetails");
-
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EcommerceDemo.Models;
 
 namespace Ecommerce.DataModels.Models
 {
@@ -18,6 +19,7 @@ namespace Ecommerce.DataModels.Models
         public string? UserId { get; set; }
 
         public ICollection<CartDetails> CartDetails { get; set; }
+        public ICollection<Product> Products { get; set; }
         public bool Archived { get; set; } = false;
         public DateTime? CreatedDate { get; set; } =DateTime.Now;
         public string CreatedBy { get; set; }
