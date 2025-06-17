@@ -17,30 +17,30 @@
                 <div class="col-10">
                     <div class="border p-3 pt-4">
                         @* <div asp-validation-summary="ModelOnly"></div> *@
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="Product.Name" type="text" class="form-control border-0 shadow" />
                             <label asp-for="Product.Name" class="ms-2"></label>
                             <span asp-validation-for="Product.Name" class="text-danger"></span>
                         </div>
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="Product.Description" type="text" class="form-control border-0 shadow" />
                             <label asp-for="Product.Description" class="ms-2"></label>
                             @* <textarea asp-for="Product.Description" type="text" class="form-control border-0 shadow"></textarea> *@
                             
 
                         </div>
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="Product.Price" type="text" class="form-control border-0 shadow" />
                             <label asp-for="Product.Price" class="ms-2"></label>
                             <span asp-validation-for="Product.Price" class="text-danger"></span>
                         </div>
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="Product.Discount" type="text" class="form-control border-0 shadow" />
                             <label asp-for="Product.Discount" class="ms-2"></label>
                             <span asp-validation-for="Product.Discount" class="text-danger"></span>
                         </div>
 
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <select asp-for="Product.CategoryId" asp-items="Model.CategoryList" class="form-select border-0 shadow">
                                 <option selected disabled>Select List</option>
                             </select>
@@ -48,31 +48,31 @@
                             <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                         </div>
 
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input type="file" name="file" class="form-control border-0 shadow" />
                             <label asp-for="Product.ImageUrl" class="ms-2"></label>
                         </div>
 
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="ProductDetails.Size" type="text" class="form-control border-0 shadow" />
                             <label asp-for="ProductDetails.Size" class="ms-2"></label>
                         </div>
 
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="ProductDetails.Height" type="text" class="form-control border-0 shadow" />
                             <label asp-for="ProductDetails.Height" class="ms-2"></label>
                         </div>
 
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="ProductDetails.Width" type="text" class="form-control border-0 shadow" />
                             <label asp-for="ProductDetails.Width" class="ms-2"></label>
                         </div>
 
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="ProductDetails.HandleShape" type="text" class="form-control border-0 shadow" />
                             <label asp-for="ProductDetails.HandleShape" class="ms-2"></label>
                         </div>
-                        <div class="form-floating py-2 col-6">
+                        <div class="form-floating py-2 col-12">
                             <input asp-for="ProductDetails.HandleThickNess" type="text" class="form-control border-0 shadow" />
                             <label asp-for="ProductDetails.HandleThickNess" class="ms-2"></label>
                         </div>

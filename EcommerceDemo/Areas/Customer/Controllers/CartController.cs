@@ -20,13 +20,13 @@ namespace EcommerceDemo.Areas.Customer.Controllers
         }
         public async Task<IActionResult> AddItem(int productId,int unitPrice, string size, string weight, int qty=1, int redirect=0)
         {
-           // var cartCount = await _cartRepository.AddItem(productId, unitPrice, qty, size, weight);
-  
-            //if (redirect == 0)
-            //{
-            //    return Ok(cartCount);
-            //}
-           return RedirectToAction("GetUserCart");
+            var cartCount = await _cartRepository.AddItem(productId, unitPrice, size, weight, qty);
+
+            if (redirect == 0)
+            {
+                return Ok(cartCount);
+            }
+            return RedirectToAction("GetUserCart");
         }
 
         public async Task<IActionResult> RemoveItem(int productId)
