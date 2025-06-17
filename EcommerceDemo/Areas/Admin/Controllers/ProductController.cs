@@ -45,15 +45,15 @@ namespace EcommerceDemo.Areas.Admin.Controllers
             else
             {
                 productVM.Product = _unitOfWork.Product.Get(o => o.ID == id);
+                productVM.ProductDetails = _unitOfWork.ProductDetails.Get(pd => pd.ProductId == id);
                 return View(productVM);
             }
                
         }
         [HttpPost]
-        public IActionResult Upsert(ProductVM productVM, IFormFile file)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             string DisMsg = "";
-            ModelState.Remove("file");
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -65,10 +65,10 @@ namespace EcommerceDemo.Areas.Admin.Controllers
                     {
                         Directory.CreateDirectory(productPath);
                     }
-                    if(!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
                     {
                         var oldImageUrlPath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
-                        if(System.IO.File.Exists(oldImageUrlPath))
+                        if (System.IO.File.Exists(oldImageUrlPath))
                         {
                             System.IO.File.Delete(oldImageUrlPath);
                         }
@@ -78,18 +78,41 @@ namespace EcommerceDemo.Areas.Admin.Controllers
                         file.CopyTo(fileStream);
                     }
                     productVM.Product.ImageUrl = @"\images\products\" + fileName;
+                }
 
-                    if (productVM.Product.ID==0)
+                if (productVM.Product.ID == 0)
+                {
+                    DisMsg = "Product Created Successfully";
+                    _unitOfWork.Product.Add(productVM.Product);
+
+                    productVM.ProductDetails.ProductId = productVM.Product.ID;
+                    _unitOfWork.ProductDetails.Add(productVM.ProductDetails);
+
+                }
+                else
+                {
+                    DisMsg = "Product Updated Successfully";
+                    _unitOfWork.Product.Update(productVM.Product);
+
+                    var existingDetails = _unitOfWork.ProductDetails.Get(pd => pd.ProductId == productVM.Product.ID);
+                    if (existingDetails != null)
                     {
-                        DisMsg = "Product Created Successfully";
-                        _unitOfWork.Product.Add(productVM.Product);
+                        // Update fields
+                        existingDetails.Width = productVM.ProductDetails.Width;
+                        existingDetails.Height = productVM.ProductDetails.Height;
+                        existingDetails.Size = productVM.ProductDetails.Size;
+                        existingDetails.HandleShape = productVM.ProductDetails.HandleShape;
+                        existingDetails.HandleThickNess = productVM.ProductDetails.HandleThickNess;
+                        // ...other fields...
+                        _unitOfWork.ProductDetails.Update(existingDetails);
                     }
                     else
                     {
-                        DisMsg = "Product Updated Successfully";
-                        _unitOfWork.Product.Update(productVM.Product);
+                        productVM.ProductDetails.ProductId = productVM.Product.ID;
+                        _unitOfWork.ProductDetails.Add(productVM.ProductDetails);
                     }
                 }
+
                 _unitOfWork.Save();
                 TempData["Success"] = DisMsg;
                 return RedirectToAction("Index");
@@ -101,10 +124,9 @@ namespace EcommerceDemo.Areas.Admin.Controllers
                     Text = c.Name,
                     Value = c.ID.ToString()
                 });
-                
+
                 return View(productVM);
             }
-                
         }
 
         

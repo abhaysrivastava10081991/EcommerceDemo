@@ -16,5 +16,19 @@ namespace Ecommerce.DataAccess.Repository
         {
             _dbContext = dbContext;
         }
+
+        public void Update(ProductDetails obj)
+        {
+            var objFromDb = _dbContext.ProductDetails.FirstOrDefault(o => o.Id== obj.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.Size = obj.Size;
+                objFromDb.Height = obj.Height;
+                objFromDb.Width = obj.Width;
+                objFromDb.HandleThickNess = obj.HandleThickNess;
+                objFromDb.HandleShape = obj.HandleShape;
+               
+            }
+        }
     }
 }

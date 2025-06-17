@@ -18,14 +18,14 @@ namespace EcommerceDemo.Areas.Customer.Controllers
             _dbContext = dbContext;
             _cartRepository = cartRepository;
         }
-        public async Task<IActionResult> AddItem(int productId,int unitPrice,int qty=1,int redirect=0)
+        public async Task<IActionResult> AddItem(int productId,int unitPrice, string size, string weight, int qty=1, int redirect=0)
         {
-            var cartCount = await _cartRepository.AddItem(productId, unitPrice, qty);
+           // var cartCount = await _cartRepository.AddItem(productId, unitPrice, qty, size, weight);
   
-            if (redirect == 0)
-            {
-                return Ok(cartCount);
-            }
+            //if (redirect == 0)
+            //{
+            //    return Ok(cartCount);
+            //}
            return RedirectToAction("GetUserCart");
         }
 

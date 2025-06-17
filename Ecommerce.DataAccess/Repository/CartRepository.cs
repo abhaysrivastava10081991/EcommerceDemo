@@ -20,7 +20,7 @@ namespace Ecommerce.DataAccess.Repository
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
         }
-        public async Task<int> AddItem(int productId,int unitPrice, int qty)
+        public async Task<int> AddItem(int productId, int unitPrice, string size, string weight, int qty)
         {
             string userId = getUserId();
             using var transaction = await _dbContext.Database.BeginTransactionAsync();

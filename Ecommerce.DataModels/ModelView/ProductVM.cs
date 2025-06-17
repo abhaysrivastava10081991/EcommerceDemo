@@ -6,7 +6,9 @@ namespace Ecommerce.DataModels.ModelView
     public class ProductVM
     {
         public Product Product { get; set; }
-        
+
+        public ProductDetails ProductDetails { get; set; }
+
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
     }

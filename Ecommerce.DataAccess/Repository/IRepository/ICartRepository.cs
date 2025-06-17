@@ -5,7 +5,7 @@ namespace Ecommerce.DataAccess.Repository.IRepository
 {
     public interface ICartRepository 
     {
-        Task<int> AddItem(int productId,int unitPrice, int qty);
+        Task<int> AddItem(int productId,int unitPrice, string size, string weight, int qty);
         Task<int> RemoveItem(int productId);
         Task<ShoppingCart> GetUserCart();
         Task<int> getCartItemCount(string userId = "");

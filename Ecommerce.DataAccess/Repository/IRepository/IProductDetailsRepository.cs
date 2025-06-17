@@ -9,5 +9,6 @@ namespace Ecommerce.DataAccess.Repository.IRepository
 {
     public interface IProductDetailsRepository : IRepository<ProductDetails>
     {
+        void Update(ProductDetails obj);
     }
 }

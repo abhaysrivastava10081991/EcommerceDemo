@@ -13,18 +13,14 @@ namespace Ecommerce.DataModels.Models
         public int Id { get; set; }
         [Required]
         public int ProductId { get; set; }
-        public double? Width1 { get; set; }
-        public double? Width2 { get; set; }
-        public double? Width3 { get; set; }
-        public double? Height1 { get; set; }
-        public double? Height2 { get; set; }
-        public double? Height3 { get; set; }
-        public string? GripColour1 { get; set; }
-        public string? GripColour2 { get; set; }
-        public string? GripColour3 { get; set; }
-        public string? BatShape1 { get; set; }
-        public string? BatShape2 { get; set; }
-        public string? BatShape3 { get; set; }
+        public string? Width { get; set; }
+        public string? Height { get; set; }
+        public string? Size { get; set; }
+        public string? Color { get; set; }
+        public string? HandleType { get; set; }
+        public string? HandleShape { get; set; }
+        public string? HandleThickNess { get; set; }
+        public bool IsAvailable { get; set; } = true;
         public bool Archived { get; set; }=false;
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string? CreatedBy { get; set; }

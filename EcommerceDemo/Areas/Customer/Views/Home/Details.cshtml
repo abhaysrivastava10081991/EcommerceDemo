@@ -42,43 +42,39 @@
                             Customization
                         </div>
                         <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">Width:</div>
+                            <div class="p-1  bg-white border-bottom">
+                                <div class="text-dark text-opacity-50 fw-semibold">Size:</div>
                             </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <input type="radio" id="width1" name="SelectedWidth" value="@Model.ProductDetails.Width1" />
-                                <label for="Width1">@Model.ProductDetails.Width1</label>
-                                @*  <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width1</div> *@
+                            <div class="p-1 bg-white border-bottom">
+                                <input type="radio" name="Size" value="Option1" id="option1" />
+                                <label for="option1">SH</label>
+
+                                <input type="radio" name="Size" value="Option2" id="option2" />
+                                <label for="option2">Harrow</label>
+
+                                <input type="radio" name="Size" value="Option3" id="option3" />
+                                <label for="option3">6</label>
+                               
                             </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <input type="radio" id="width2" name="SelectedWidth" value="@Model.ProductDetails.Width2" />
-                                <label for="Width2">@Model.ProductDetails.Width2</label>
-                                @*       <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width2</div> *@
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <input type="radio" id="width3" name="SelectedWidth" value="@Model.ProductDetails.Width3" />
-                                <label for="Width3">@Model.ProductDetails.Width3</label>
-                                @* <div class="text-dark text-opacity-50 fw-semibold">@Model.ProductDetails.Width3</div> *@
-                            </div>
+                            
                         </div>
                         <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Color:</div>
+                            <div class="p-1 bg-white fw-bold">
+                                <div>Weight:</div>
                             </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <input type="radio" id="GripColour1" name="SelectedColor" value="@Model.ProductDetails.GripColour1" />
-                                <label for="GripColour1">@Model.ProductDetails.GripColour1</label>
-                                @* <div>@Model.ProductDetails.GripColour1</div> *@
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <input type="radio" id="GripColour2" name="SelectedColor" value="@Model.ProductDetails.GripColour2" />
-                                <label for="GripColour2">@Model.ProductDetails.GripColour2</label>
-                                @*   <div>@Model.ProductDetails.GripColour2</div> *@
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <input type="radio" id="GripColour3" name="SelectedColor" value="@Model.ProductDetails.GripColour3" />
-                                <label for="GripColour3">@Model.ProductDetails.GripColour3</label>
-                                @*   <div>@Model.ProductDetails.GripColour3</div> *@
+                            <div class="p-1 bg-white fw-bold">
+                                <input type="radio" name="Width" value="Option1" id="option1" />
+                                <label for="option1">2lb 7oz - 8oz | Very Light (1110 - 1150g)</label><br />
+
+                                <input type="radio" name="Width" value="Option2" id="option2" />
+                                <label for="option2">2lb 9oz - 10oz | Light (1150 - 1190g)</label><br />
+
+                                <input type="radio" name="Width" value="Option3" id="option3" />
+                                <label for="option2">2lb 11oz - 12oz | Medium (1190 - 1250g)</label><br />
+
+                                <input type="radio" name="Width" value="Option3" id="option3" />
+                                <label for="option2">2lb 13oz + | Heavy (1250 g +)</label>
+                               
                             </div>
                         </div>
                         <div class="row pl-2 my-3">
@@ -91,7 +87,7 @@
                                           id="inputGroup-sizing-default">
                                         Count
                                     </span>
-                                    <input type="number" value="1" class="form-control text-end"
+                                    <input type="number" name="count" id="count" value="1" class="form-control text-end"
                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
 
                                 </div>
@@ -99,7 +95,9 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" onclick="add(@Model.ID,@Model.Price)" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
+                                <button type="submit" onclick="add(@Model.ID,@Model.Price,
+            getSelectedRadioValue('Size'),
+            getSelectedRadioValue('Width'),getCount())" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
                                     Add to Cart
                                 </button>
                             </div>
@@ -114,14 +112,14 @@
 
 @section Scripts {
     <script>
-        async function add(productId,unitPrice) {
+        async function add(productId,unitPrice,size,weight,qty) {
 
             var userNameEl = document.getElementById("userName");
             if (userNameEl == null) {
                 window.location.href = '/Identity/Account/Login';
             }
             try {
-                var response = await fetch(`/Customer/Cart/AddItem?productId=${productId}&unitPrice${unitPrice}`);
+                var response = await fetch(`/Customer/Cart/AddItem?productId=${productId}&unitPrice=${unitPrice}&size=${size}&weight=${weight}&qty=${qty}`);
                 if (response.ok) {
                     var result = await response.json();
                     var cartItemCount = document.getElementById("cartCount");
@@ -136,5 +134,22 @@
                 console.log(err);
             }
         }
+    </script>
+
+    <script>
+                function getSelectedRadioValue(name) {
+            var radios = document.getElementsByName(name);
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    return radios[i].value;
+                }
+            }
+            return null;
+        }
+
+        function getCount() {
+            return document.getElementById("count").value;
+        }
+
     </script>
 }
